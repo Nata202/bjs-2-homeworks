@@ -10,13 +10,16 @@ function solveEquation(a, b, c) {
   } else if (discriminant > 0) {
     x1 = (-b + Math.sqrt(discriminant)) / (2 * a);
     x2 = (-b - Math.sqrt(discriminant)) / (2 * a);
-    arr.push(x1,x2);
-  } 
-     return Math.floor(arr);
+    arr.push(x1, x2);    
+  } else if (discriminant < 0) {
+    return arr;
+  }
+    
+  return Math.floor(arr);
 }
 
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
-if (typeof(percent) === "string" || typeof(contribution) === "string" || typeof(amount) === "string" || typeof(countMonths) === "string") {
+if (isNaN(percent) || isNaN(contribution) || isNaN(amount) || isNaN(countMonths)) {
   Number(percent);
   Number(contribution);
   Number(amount);
@@ -29,5 +32,5 @@ if (typeof(percent) === "string" || typeof(contribution) === "string" || typeof(
     let paymentPerMonth = credit * (interestRate + (interestRate / (Math.pow(1 + interestRate) ** countMonths) - 1));
     let sum = paymentPerMonth * countMonths - contribution;
 
-    return sum
+    return Number(sum.toFixed(2))
 }
