@@ -21,10 +21,11 @@ Student.prototype.addMarks = function (...marks) {
 Student.prototype.getAverage = function () {
     if (this.marks === undefined || this.marks.length === 0) {
         return 0;
-        } else {
+        } 
+
         const sum = this.marks.reduce((acc, marks) => acc + marks, 0);
         return sum / this.marks.length
-        }
+        
 }
 
 Student.prototype.exclude = function (reason) {
