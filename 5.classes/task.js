@@ -7,13 +7,13 @@ class PrintEditionItem {
         this.type
     }
     fix() {
-        let damagedEdition = state * 1.5;
-        return damagedEdition
+        return this.state * 1.5;
+         
     }
 
     _state = 100;
     
-    setState(newEdition) {
+    set state(newEdition) {
         if (newEdition < 0) {
             this._state = 0;
         } else if (newEdition > 100) {
@@ -22,7 +22,7 @@ class PrintEditionItem {
             this._state;
         }
     }
-    getState() {
+    get state() {
         return this._state;
     }
 }
@@ -35,7 +35,7 @@ class Magazine extends PrintEditionItem{
 }
 
 class Book extends PrintEditionItem{
-    constructor(name, releaseDate, pagesCount, state = 100, author, type = null) {
+    constructor(author, name, releaseDate, pagesCount, state = 100, type = null) {
     super(name, releaseDate, pagesCount, state);
     this.author = author;
     this.type = "book";
@@ -43,24 +43,24 @@ class Book extends PrintEditionItem{
 }
 
 class NovelBook extends Book {
-    constructor(name, releaseDate, pagesCount, state = 100, type = null){
-    super(name, releaseDate, pagesCount, state);
+    constructor(author, name, releaseDate, pagesCount, state = 100, type = null){
+    super(author, name, releaseDate, pagesCount, state);
     this.type = "novel";
     }
 
 }
 
 class FantasticBook extends Book {
-    constructor(name, releaseDate, pagesCount, state = 100, type = null) {
-    super(name, releaseDate, pagesCount, state);
+    constructor(author, name, releaseDate, pagesCount, state = 100, type = null) {
+    super(author, name, releaseDate, pagesCount, state);
     this.type = "fantastic";
     }
 
 }
 
 class DetectiveBook extends Book {
-    constructor(name, releaseDate, pagesCount, state = 100, type = null) {
-    super(name, releaseDate, pagesCount, state);
+    constructor(author, name, releaseDate, pagesCount, state = 100, type = null) {
+    super(author, name, releaseDate, pagesCount, state);
     this.type = "detective";
     }
 
@@ -69,7 +69,7 @@ class DetectiveBook extends Book {
 
 class Library {
     constructor(name, books){
-        this.name = '';
+        this.name = name;
         this.books = [];
 
     }
@@ -77,7 +77,7 @@ class Library {
     addBook(book) {
         let state = 100;
         if(state > 30) {
-            book.push(books)
+            book.push(...books)
         }
     }
 
@@ -85,7 +85,7 @@ class Library {
         if(type === undefined && value === undefined) {
             return null;
         } else {
-            return book
+            return book;
         }
     }
 
