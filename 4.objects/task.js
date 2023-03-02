@@ -1,28 +1,29 @@
-function Student(name, gender, age) {    
-  let student1 = new Student('Natasha', 'Женский', 24);
-  let student2 = new Student('Nikita', 'Мужской', 21);
-  let student3 = new Student('Olga', 'Женский', 27);
-  Student.marks = [];
+function Student(name, gender, age, marks) {    
+  this.name = name;
+  this.gender = gender;
+  this.age = age;
+  this.marks = [];
 }
+
 
 Student.prototype.setSubject = function (subjectName) {
   this.subject = subjectName;
 }
 
 Student.prototype.addMarks = function (...marks) {
-    if ( this.marks.length === 0) {
-        console.log('Пользователь отчислен')
+    if ( this.marks === undefined) {
+        return;
         } else {
-        this.marks.push(marks); 
+        this.marks.push(...marks); 
         }
 }
 
 Student.prototype.getAverage = function () {
-    if ( this.marks.length === 0 || this.marks === undefined) {
+    if (this.marks === undefined || this.marks.length === 0) {
         return 0;
         } else {
-        const sum = marks.reduce((acc, marks) => acc + marks, 0);
-        return sum / marks.length
+        const sum = this.marks.reduce((acc, marks) => acc + marks, 0);
+        return sum / this.marks.length
         }
 }
 
