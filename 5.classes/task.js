@@ -4,22 +4,23 @@ class PrintEditionItem {
         this.releaseDate = releaseDate;
         this.pagesCount = pagesCount;
         this.state = state;
-        this.type
+        this.type = type;
     }
     fix() {
-        return this.state * 1.5;
+        return this.state *= 1.5;
          
     }
 
-    _state = 100;
+  //  _state = 100;
     
     set state(newEdition) {
+        this._state = newEdition;
         if (newEdition < 0) {
             this._state = 0;
         } else if (newEdition > 100) {
             this._state = 100;
         } else {
-            this._state;
+            this._state = this._state;
         }
     }
     get state() {
@@ -75,35 +76,36 @@ class Library {
     }
 
     addBook(book) {
-        let state = 100;
-        if(state > 30) {
-            book.push(...books)
+        if (book.state > 30) {
+            this.books.push(book)
         }
     }
 
     findBookBy(type, value) {
-        if(type === undefined && value === undefined) {
-            return null;
-        } else {
-            return book;
+        for(let i = 0; i < this.books.length; i++) {
+            if(this.books[i][type] === value) {
+                return this.books[i];
+            } 
         }
+        return null;
     }
 
     giveBookByName(bookName) {
-        if (bookName === undefined) {
-            return null
-        } else {
-            delete this.bookName;
-            return bookName
+        for(let i = 0; i < this.books.length; i++) {
+            if (this.books[i].name === bookName) {
+                 return  this.books.splice(i, 1)[0];
+            }
         }
+        return null;
     }
 }
 
 class Student {
     constructor(name) {
         this.name = name;
+        this.marksRepository = [];
     }
-    marksRepository = [];
+    
 
     addMark(mark, subject) {
         if (mark <= 5 && mark > 2) {
@@ -116,18 +118,20 @@ class Student {
     }
 
     getAverageBySubject() {
-        if (marksRepository[subject] === undefined) {
-            return 0
+        for(let i = 0; i < this.marksRepository.length; i++) {
+            if (this.marksRepository[i][subject] === undefined) {
+                return 0;
+            } 
         }
         sum = marks.reduce((acc, marks) => acc + marks, 0);
         return sum / marks.length
     }
 
     getAverage() {
-        Object.keys(marksRepository);
+        Object.keys(this.marksRepository);
         sum = marks.reduce((acc, marks) => acc + marks, 0);
         avg = sum / marks.length
-        return avg / marksRepository.length
+        return avg / this.marksRepository.length
 
     }
   }
