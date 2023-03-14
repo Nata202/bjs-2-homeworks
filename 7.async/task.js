@@ -6,10 +6,6 @@ class AlarmClock {
     }
 
     addClock (time, callback) {
-        time = new Date().toLocaleTimeString("ru-Ru", {
-            hour: "2-digit",
-            minute: "2-digit",
-          });
         if (!time || !callback){
             throw new Error ('Отсутствуют обязательные аргументы');
         } else if (this.alarmCollection.find(clock => clock.time === time)) {
@@ -21,7 +17,6 @@ class AlarmClock {
 
     removeClock(time) {
         this.alarmCollection = this.alarmCollection.filter(clock => clock.time !== time);
-        delete this.alarmCollection;
     }
 
     getCurrentFormattedTime () {
@@ -33,28 +28,27 @@ class AlarmClock {
 
     start () {
         if (this.intervalId !== null){
+        //if (timerId !== null){
             return;
-        }
-
-    this.intervalId = setInterval(() => this.Object.forEach({
-        callback: callback, 
-        time: getCurrentFormattedTime(), 
+        } else {
+        this.intervalId = setInterval(() => this.Object.forEach({
+        time: this.getCurrentFormattedTime(), 
         canCall: true,
     }), 1000);
-
+    }
     if (this.intervalId === true){
-        this.canCall = false;
-        return this.callback();
+        canCall = false;
+        clock.callback();
     }
     }
 
     stop () {
-        clearInterval(intervalId);
+        this.clearInterval(intervalId);
         this.intervalId = null;
     }
 
     resetAllCalls () {
-        this.alarmCollection.forEach(() => this.canCall === true)
+        this.alarmCollection.forEach((clock) => clock.canCall = true)
 
     }
 
