@@ -11,8 +11,9 @@ function wrapper(...args) {
     }
 
     let result = func(...args); // в кеше результата нет — придётся считать
-    cache.push({hash, result}) ; // добавляем элемент с правильной структурой
-    if (cache.length > 5) { 
+    if (!objectInCache){
+      cache.push(hash, result); // добавляем элемент с правильной структурой
+    } else if (cache.length > 5) { 
       cache.shift() // если слишком много элементов в кеше, надо удалить самый старый (первый) 
     }
     console.log("Вычисляем: " + result);
@@ -23,14 +24,21 @@ return wrapper;
 
 //Задача № 2
 function debounceDecoratorNew(func, delay) {
+  timeoutId = null;
   function wrapper(...args){
-    wrapper.count.push(args);
-    wrapper.count.push(allCount);
-    return func(...args);
-
+    if (timeoutId) {
+    clearTimeout(timeoutId);
   }
-  wrapper.count = [];
-  wrapper.allCount = [];
+  timeoutId = setTimeout(() => timeoutId = null, delay);
+  wrapper.count++;
+  
+  return func(...args)
+  }
+
+  wrapper.count = 0;
+  wrapper.allCount = 0;
+
+  wrapper.allCount++;
 
   return wrapper;
 }
