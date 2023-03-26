@@ -28,18 +28,15 @@ class AlarmClock {
 
     start () {
         if (this.intervalId !== null){
-        //if (timerId !== null){
             return;
-        } else {
-        this.intervalId = setInterval(() => this.Object.forEach({
-        time: this.getCurrentFormattedTime(), 
-        canCall: true,
+        } 
+
+        this.intervalId = setInterval(() => this.alarmCollection.forEach(
+        (clock) => {clock.time = getCurrentFormattedTime() && clock.canCall === true
     }), 1000);
-    }
-    if (this.intervalId === true){
-        canCall = false;
-        clock.callback();
-    }
+        this.clock.canCall = false;
+        this.clock.callback();
+    
     }
 
     stop () {
