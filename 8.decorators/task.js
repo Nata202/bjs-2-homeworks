@@ -6,12 +6,12 @@ function wrapper(...args) {
     const hash = md5(args); // получаем правильный хеш c помощью функции md5
     let objectInCache = cache.find((item) => item.hash === hash); // ищем элемент, хеш которого равен нашему хешу
     if (objectInCache) { // если элемент найден
-        console.log("Из кэша: " + cache[hash]); // индекс нам известен, по индексу в массиве лежит объект, как получить нужное значение?
-        return "Из кэша: " + cache[hash];
+        console.log("Из кэша: " + objectInCache.result); // индекс нам известен, по индексу в массиве лежит объект, как получить нужное значение?
+        return "Из кэша: " + objectInCache.result;
     }
 
     let result = func(...args); // в кеше результата нет — придётся считать
-    cache.push(hash, result); // добавляем элемент с правильной структурой
+    cache.push({hash, result}); // добавляем элемент с правильной структурой
     if (cache.length > 5) { 
       cache.shift() // если слишком много элементов в кеше, надо удалить самый старый (первый) 
     }
@@ -23,26 +23,30 @@ return wrapper;
 
 //Задача № 2
 
-function decorator(func, delay) {
+function debounceDecoratorNew(func, delay) {
   let timeout;
+  wrapper.count = 0;
+  wrapper.allCount = 0;
 
-  return function wrapper(...args) {
+  function wrapper(...args) {    
+    if (timeout !== undefined) {
+      func(...args);
+      wrapper.count++;
+    }     
+    
     clearTimeout(timeout);
-
-    timeout = setTimeout (() => {
-      func.apply(this, args);
-      console.timeEnd('time');
+       timeout = setTimeout (() => {
+      func.apply(this, args); 
+      wrapper.count++;
     }, delay);
-
-    wrapper.count = 0;
-    wrapper.allCount = 0;
     wrapper.allCount++;
-    wrapper.count++;
 
-    return func(...args);
-  }
+        return func(...args);
+  }  
 
-  }
+  return wrapper;
+
+}
 
 
 
